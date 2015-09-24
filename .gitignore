@@ -9,6 +9,9 @@ __pycache__/
 #bat
 *.bat
 
+#backup files
+*.py.bak
+
 # Distribution / packaging
 .Python
 env/
