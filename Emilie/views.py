@@ -10,8 +10,9 @@ import re
 import codecs
 import sys
 import imp
-imp.reload(sys)
-sys.setdefaultencoding('utf-8')
+
+#imp.reload(sys)
+#sys.setdefaultencoding('utf-8')    	#python3 don't has this method,the default on Python 3 is UTF-8 already
 
 def get_faq(request):
     return render_to_response('faq.html', {})

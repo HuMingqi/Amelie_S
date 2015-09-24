@@ -1,6 +1,6 @@
 import os
 from . import image
-from . import feature_vector
+import Emilie.feature_vector
 import json
 import datetime
 from . import save_data
