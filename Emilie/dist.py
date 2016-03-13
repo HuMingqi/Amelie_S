@@ -1,4 +1,4 @@
-import os
+﻿import os
 from . import image
 import Emilie.feature_vector
 import json
@@ -7,7 +7,7 @@ from . import save_data
 
 def get_imlist(path):
     """ Returns a list of filenames for all jpg images in a directory. """
-    return [os.path.join(path,f) for f in os.listdir(path) if f.endswith('.jpg')]
+    return [os.path.join(path,f) for f in os.listdir(path) if f.endswith('.jpg')]       #os.listdir 列举文件夹目录，子文件夹名及子文件名
 
 def dist_between_feature_vector(feature_vector_a, feature_vector_b):
 	dist = 0

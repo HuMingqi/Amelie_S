@@ -1,9 +1,9 @@
-from PIL import Image
+﻿from PIL import Image
 from numpy import *
 import colorsys
 #import pygal
 #from pygal.style import LightStyle
-from . import save_data
+from . import save_data             # . 不能省略
 from . import dist
 import datetime
 from PIL import ImageFile
@@ -72,9 +72,8 @@ def feature_vector_of_image(image_path):
     
 
 
-def calculate_and_save_feature_vectors(filename, image_set_folder):
-    ImageFile.LOAD_TRUNCATED_IMAGES = True
-
+def calculate_and_save_feature_vectors(filename, image_set_folder):         #计算特征库，并保存到filename（路径）
+    ImageFile.LOAD_TRUNCATED_IMAGES = True  
     image_paths = dist.get_imlist(image_set_folder)
     image_feature_vectors = []
     start_time = datetime.datetime.now()
@@ -86,6 +85,6 @@ def calculate_and_save_feature_vectors(filename, image_set_folder):
         print(image_path)
     end_time = datetime.datetime.now()
     use_time = end_time - start_time
-    print(str(use_time.seconds+use_time.microseconds/1000000.0))
+    print(str(use_time.seconds+use_time.microseconds/1000000.0))        
     save_data.save_data(filename, image_paths, image_feature_vectors)
     return image_feature_vectors
