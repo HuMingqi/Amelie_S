@@ -1,3 +1,5 @@
+#eclipse
+.settings/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,6 +10,10 @@ __pycache__/
 
 #bat
 *.bat
+
+#eclipse project
+*.project
+*.pydevproject
 
 #backup files
 *.py.bak
