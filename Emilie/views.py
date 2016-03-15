@@ -35,9 +35,9 @@ def search_similar_images(request):
         upload_image_path = save_file(request.FILES['upload_image'])    #存储上传图片并返回路径,UploadImages/
     upload_image_feature_vector = feature_vector.feature_vector_of_image(upload_image_path)             #特征提取
     distances = dist.dists(upload_image_feature_vector, 'D:/Clothes Search System/PL/dressFeature.txt')   #json file,计算请求图片与所有库图片
-    k = 20                                                                                              #距离，return [[keys],[dists]]
-    top_k_distances = top_k.top_k_dists(distances, k)   #return [(image.name,dist)...],计算出最接近的前k个图片
-    
+    k = 20                                                                                              #距离，return [(keys,dists)...]
+    #top_k_distances = top_k.top_k_dists(distances, k)   #return [(image.name,dist)...],计算出最接近的前k个图片
+    top_k_clothes = top_k.top_k_dists(distances, k)
     # for image_path, distance in top_k_distances:
     #     clothes_index = image_path.split('\\')[-1].split('_')[0]
     #     clothes_info = 
@@ -59,10 +59,10 @@ def search_similar_images(request):
     # similar_image_urls = []
     similar_image_url_prefix = "http://202.119.84.68:8000/Images/"
     
-    for image_path, distance in top_k_distances:            #image_path格式 ?
+    for image_name in top_k_clothes:            
         image_dict = {}
 
-        image_name = image_path.split('/')[-1]             #分离图片名，图片名格式 i_j.jpg，第i件服饰的第j张图
+        #image_name = image_path.split('/')[-1]             #分离图片名，图片名格式 i_j.jpg，第i件服饰的第j张图
         clothes_index = image_name.split('_')[0]            #分离图片第一索引 i
 
         similar_image_url = '%s%s' % (similar_image_url_prefix, image_name) #http://202.119.84.68:8000/Images/image_name     仅给一张示例照片

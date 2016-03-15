@@ -2,29 +2,39 @@ import heapq
 # from heapq_showtree import show_tree
 from .image import Image
 
-# top-k
+#get clothes index
+#def get_index(path):
+ #   image_name = path.split('/')[-1]
+  #  return image_name.split('_')[0]
+
+# top-k clothes not image!!
 def top_k_dists(dists, k):
-    images = []
-    for path, dist in dists:
-        images.append(Image(path, dist))
-    
-    # heap = images[:k]
-    # heapq.heapify(heap)
+    #images = []
+    #for path, dist in dists:
+     #   images.append(Image(path, dist))    
+    a=5
+    top_ak_dists = heapq.nsmallest(k*a, dists, key=lambda t:t[1])
+    top_k_clothes=[]
+    for path,dist in top_ak_dists:
+        image_name = path.split('/')[-1]        
+        repeat=False         
+        for clothes in top_k_clothes:
+            if clothes.split('_')[0]==image_name.split('_')[0]:     #index same , then apart it
+                repeat=True
+        if(not repeat):
+            top_k_clothes.append(image_name)            
+            if len(top_k_clothes)==20:
+                print("hit!!!")
+                break
+    ak=a*k
+    while len(top_k_clothes)!=20:
+        image_name=top_ak_dists[--ak][0].split('/')[-1]
+        top_k_clothes.append(image_name)
+    #top_k_distances = []
+    #for image in top_k_images:
+     #   top_k_distances.append((image.name, image.dist))
 
-    # for i in xrange(k, len(images)):
-
-    #     # if the dist is small than the current biggest dist, replace the biggest dist with this one
-    #     if images[i].dist < heap[0].dist:
-    #         biggest = heapq.heapreplace(heap, images[i])
-
-    # top_k_images = sorted(heap, key=lambda x:x.dist)
-    top_k_images = heapq.nsmallest(k, images, key=lambda x:x.dist)
-
-    top_k_distances = []
-    for image in top_k_images:
-        top_k_distances.append((image.name, image.dist))
-
-    return top_k_distances
+    return top_k_clothes
 
 # top-k
 def top_k(data, k):
