@@ -1,4 +1,4 @@
-﻿from django.http import HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 import os
 import json
@@ -28,7 +28,7 @@ def get_uploadImage(request):
     return render_to_response('uploadImage.html', {})
 
 def search_similar_images(request):
-    print('method search_similar_images')
+    #print('method search_similar_images')
     response_dict = {}
     if request.method == 'POST':
         # if 'image' in request.FILES:
@@ -72,8 +72,8 @@ def search_similar_images(request):
         image_dict['height'] = similar_image_size[1]        #[6:10]
         
         info = getClotheInfo(clothes_index, clothes_info)       #从图片信息库中按索引取出 (tuple)
-        image_dict['shopping_url'] = info[-1]        
-        image_dict['other_info'] = ' '.join(info[:-1])
+        image_dict['shopping_url'] = info[-1]      
+        image_dict['other_info'] = '\n'.join(info[:-1])
         
         # image_dict['shopping_url'] = get_shopping_url(clothes_info, clothes_index)
         # image_dict['other_info'] = get_other_info(clothes_info, clothes_index)
@@ -98,7 +98,12 @@ def getClotheInfo(id, all_clothes_info):
     pattern = re.compile(regex_expression)
     match = pattern.search(all_clothes_info)
     if match:
-        return match.groups()                              #返回信息元组
+        cinfo=list(match.groups())  #tuple can't be assigned!!!        
+        cinfo[0]='品牌：' +cinfo[0]        
+        cinfo[1]='品名：' +cinfo[1]
+        cinfo[2]='材质：' +cinfo[2]
+        cinfo[3]='价格：' +cinfo[3]        
+        return cinfo                             #返回信息元组
     else:
         return ("Unknown", "Unknown", "Unknown", "Unknown", "http://item.jd.com/1547204870.html")
 
@@ -179,3 +184,4 @@ def get_similar_image(request, image_name):                   #image_name 请求
     else:
     	return HttpResponse(image_data, content_type="image/png")
     
+
