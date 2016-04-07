@@ -1,7 +1,7 @@
 import ctypes
 
-#locate .dll file
-dll_path="../DLLS/feature_vector.dll"
+#locate .dll file. using absolute path in django. relative path just in python intertive mode
+dll_path="D:/Clothes Search System/AmelieServer/DLLS/feature_vector.dll"
 dll=ctypes.CDLL(dll_path)
 
 #void get_feature_vector(double[24],string)

@@ -7,8 +7,8 @@ from . import dist
 from . import top_k
 import re
 import codecs
-import sys
-import imp   
+#import sys
+#import imp
 
 # imp.reload(sys)
 # sys.setdefaultencoding('utf-8')    	#python3 don't has this method,the default on Python 3 is UTF-8 already
@@ -92,7 +92,6 @@ def search_similar_images(request):
     response_dict["data"] = similar_image_dict_list
     return HttpResponse(json.dumps(response_dict))      #返回 图片信息 ，图片本身呢？--下载链接
 
-
 def getClotheInfo(id, all_clothes_info):
     regex_expression = r'"id":' + id +r'.*?"brand":"(.*?)".*?"productName":"(.*?)".*?"material":"(.*?)".*?"price":"(.*?)".*?"buyUrl":"(.*?)"'
     pattern = re.compile(regex_expression)
@@ -106,42 +105,6 @@ def getClotheInfo(id, all_clothes_info):
         return cinfo                             #返回信息元组
     else:
         return ("Unknown", "Unknown", "Unknown", "Unknown", "http://item.jd.com/1547204870.html")
-
-if __name__ == '__main__':                                      #编码
-    f = open('clothes_info_1000_utf8.txt')
-    all_clothes_info = f.read()
-    f.close()
-    if all_clothes_info[:3] == codecs.BOM_UTF8:
-        all_clothes_info = all_clothes_info[3:]
-
-    all_clothes_info = all_clothes_info.encode('gbk')
-    print(getClotheInfo('1', all_clothes_info))
-    print(getClotheInfo('20', all_clothes_info))
-    print(getClotheInfo('39', all_clothes_info))
-
-def get_shopping_url(clothes_info, clothes_index):                          #弃用
-    # regExp = r'\{.+\"id\":' + clothes_index + r',.+\"buyUrl\":\"(.+)\"\}'
-    regExp = r'\{[^\{\}]+\"id\":' + clothes_index + r',[^\{\}]+\"buyUrl\":\"([^\{\}]+)\"\}'
-    # print regExp
-    searchObj = re.search(regExp, clothes_info, re.I|re.M)
-    return searchObj.groups()[0];
-
-def get_other_info(clothes_info, clothes_index):                             #弃用
-    regExp = r'\{[^\{\}]+\"id\":' + clothes_index + r',[^\{\}]+\"brand\":\"([^\{\}\"]+)\"[^\{\}]+\"productName\":\"([^\{\}\"]+)\"[^\{\}]+\"material\":\"([^\{\}\"]+)\"[^\{\}]+\"price\":\"([^\{\}\"]+)\"\}'
-    searchObj = re.search(regExp, clothes_info, re.I|re.M)
-    other_info_dict = {}
-    other_info_dict['brand'] = searchObj.groups()[0]
-    other_info_dict['productName'] = searchObj.groups()[1]
-    other_info_dict['material'] = searchObj.groups()[2]
-    other_info_dict['price'] = searchObj.groups()[3]
-    return other_info_dict;
-
-def get_clothes_info(path='D:\\clothes_info.txt'):                  #弃用
-    target = open(path, 'r')
-    clothes_info_str = target.read()
-    target.close()
-    clothes_info_dic = json.loads(clothes_info_str)                 
-    return clothes_info_dic
 
 def save_file(file, path=''):                                       #保存上传文件
     ''' Little helper to save a file
@@ -163,7 +126,6 @@ def save_file(file, path=''):                                       #保存上�
 #TODO analyse image_name, get the type of wanted image, and treat them distingushly
 def get_similar_image(request, image_name):                   #image_name 请求url中的一个组                                #传回请求图片
     response_dict = {}
-
     # open image
     # image_path = 'D:\\Images\\' + image_name
     image_path = 'D:\\Clothes Search System\\PL\\dress\\' + image_name
@@ -185,3 +147,41 @@ def get_similar_image(request, image_name):                   #image_name 请求
     	return HttpResponse(image_data, content_type="image/png")
     
 
+'''
+def get_clothes_info(path='D:\\clothes_info.txt'):                  #弃用
+    target = open(path, 'r')
+    clothes_info_str = target.read()
+    target.close()
+    clothes_info_dic = json.loads(clothes_info_str)                 
+    return clothes_info_dic
+
+def get_shopping_url(clothes_info, clothes_index):                          #弃用
+    # regExp = r'\{.+\"id\":' + clothes_index + r',.+\"buyUrl\":\"(.+)\"\}'
+    regExp = r'\{[^\{\}]+\"id\":' + clothes_index + r',[^\{\}]+\"buyUrl\":\"([^\{\}]+)\"\}'
+    # print regExp
+    searchObj = re.search(regExp, clothes_info, re.I|re.M)
+    return searchObj.groups()[0];
+
+def get_other_info(clothes_info, clothes_index):                             #弃用
+    regExp = r'\{[^\{\}]+\"id\":' + clothes_index + r',[^\{\}]+\"brand\":\"([^\{\}\"]+)\"[^\{\}]+\"productName\":\"([^\{\}\"]+)\"[^\{\}]+\"material\":\"([^\{\}\"]+)\"[^\{\}]+\"price\":\"([^\{\}\"]+)\"\}'
+    searchObj = re.search(regExp, clothes_info, re.I|re.M)
+    other_info_dict = {}
+    other_info_dict['brand'] = searchObj.groups()[0]
+    other_info_dict['productName'] = searchObj.groups()[1]
+    other_info_dict['material'] = searchObj.groups()[2]
+    other_info_dict['price'] = searchObj.groups()[3]
+    return other_info_dict;
+
+if __name__ == '__main__':                                      #编码
+    f = open('clothes_info_1000_utf8.txt')
+    all_clothes_info = f.read()
+    f.close()
+    if all_clothes_info[:3] == codecs.BOM_UTF8:
+        all_clothes_info = all_clothes_info[3:]
+
+    all_clothes_info = all_clothes_info.encode('gbk')
+    print(getClotheInfo('1', all_clothes_info))
+    print(getClotheInfo('20', all_clothes_info))
+    print(getClotheInfo('39', all_clothes_info))
+
+'''

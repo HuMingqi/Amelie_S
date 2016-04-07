@@ -8,12 +8,13 @@ import datetime
 import os
 import json
 import ctypes
-from pack_feature_vector_cdll import *
+from . import pack_feature_vector_cdll
+#from pack_feature_vector_cdll import * #cant use in django,it'll not found
 
 def feature_vector_of_image(image_path):
     hsv_vector=(ctypes.c_double*24)()
     #call dll func
-    get_feature_vector(hsv_vector,bytes(image_path,encoding='utf-8'))
+    pack_feature_vector_cdll.get_feature_vector(hsv_vector,bytes(image_path,encoding='utf-8'))
     return list(hsv_vector)
 
 def get_imlist(path):
@@ -26,7 +27,7 @@ def save_data(filename, key_list, value_list):
     target.write(json.dumps(dic))
     target.close()
 
-def calculate_and_save_feature_vectors(filename, image_set_folder):         #计算特征库，并保存到filename（路径) use / in folder path
+def calculate_and_save_feature_vectors(filename, image_set_folder):         #calculate feature lib and store filename（路径) use / in folder path
     image_paths = get_imlist(image_set_folder)
     image_feature_vectors = []
     #store hsv from cdll
@@ -35,7 +36,7 @@ def calculate_and_save_feature_vectors(filename, image_set_folder):         #计
     start_time = datetime.datetime.now()    
     for image_path in image_paths:
         #call dll
-        get_feature_vector(hsv_vector,bytes(image_path,encoding='utf-8'))
+        pack_feature_vector_cdll.get_feature_vector(hsv_vector,bytes(image_path,encoding='utf-8'))
         image_feature_vectors.append(list(hsv_vector))      #listize array        
         print(image_path)
     end_time = datetime.datetime.now()
