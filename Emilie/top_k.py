@@ -1,17 +1,16 @@
 import heapq
 # from heapq_showtree import show_tree
-from .image import Image
 
 #get clothes index
 #def get_index(path):
- #   image_name = path.split('/')[-1]
-  #  return image_name.split('_')[0]
+#   image_name = path.split('/')[-1]
+#   return image_name.split('_')[0]
 
 # top-k clothes not image!!
 def top_k_dists(dists, k):
     #images = []
     #for path, dist in dists:
-     #   images.append(Image(path, dist))    
+    #    images.append(Image(path, dist))    
     a=5
     top_ak_dists = heapq.nsmallest(k*a, dists, key=lambda t:t[1])
     top_k_clothes=[]
@@ -19,7 +18,7 @@ def top_k_dists(dists, k):
         image_name = path.split('/')[-1]        
         repeat=False         
         for clothes in top_k_clothes:
-            if clothes.split('_')[0]==image_name.split('_')[0]:     #index same , then apart it
+            if clothes.split('_')[0]==image_name.split('_')[0]:     #if the same clothes , then apart it
                 repeat=True
         if(not repeat):
             top_k_clothes.append(image_name)            
@@ -29,38 +28,35 @@ def top_k_dists(dists, k):
     ak=a*k
     while len(top_k_clothes)!=20:
         image_name=top_ak_dists[--ak][0].split('/')[-1]
-        top_k_clothes.append(image_name)
-    #top_k_distances = []
-    #for image in top_k_images:
-     #   top_k_distances.append((image.name, image.dist))
+        top_k_clothes.append(image_name)    
 
     return top_k_clothes
 
-# top-k
-def top_k(data, k):
-    heap = data[:k]
-    # print 'random :'
-    # show_tree(heap)
-    heapq.heapify(heap)
-    # print 'heapified :'
-    # show_tree(heap)
-
-    for i in range(k, len(data)):
-
-        # if the dist is small than the current biggest dist, replace the biggest dist with this one
-        if data[i].dist < heap[0].dist:
-            biggest = heapq.heapreplace(heap, data[i])
-            # print 'replace %s with %s' % (biggest, data[i])
-        # else :
-            # print 'abondom :', data[i]
-        # show_tree(heap)
-    # for i, n in enumerate(heap):
-    #   print n
-    # print 'k smallest: '
-    result = sorted(heap, key=lambda x:x.dist)
-    # for i, n in enumerate(result):
-    #     print n
-    return result
+# # top-k
+# def top_k(data, k):
+#     heap = data[:k]
+#     # print 'random :'
+#     # show_tree(heap)
+#     heapq.heapify(heap)
+#     # print 'heapified :'
+#     # show_tree(heap)
+# 
+#     for i in range(k, len(data)):
+# 
+#         # if the dist is small than the current biggest dist, replace the biggest dist with this one
+#         if data[i].dist < heap[0].dist:
+#             biggest = heapq.heapreplace(heap, data[i])
+#             # print 'replace %s with %s' % (biggest, data[i])
+#         # else :
+#             # print 'abondom :', data[i]
+#         # show_tree(heap)
+#     # for i, n in enumerate(heap):
+#     #   print n
+#     # print 'k smallest: '
+#     result = sorted(heap, key=lambda x:x.dist)
+#     # for i, n in enumerate(result):
+#     #     print n
+#     return result
         
 
 

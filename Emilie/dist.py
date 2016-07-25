@@ -1,6 +1,4 @@
 ﻿import os
-from . import image
-import Emilie.feature_vector
 import json
 import datetime
 from . import save_data
@@ -10,10 +8,10 @@ def get_imlist(path):
     return [os.path.join(path,f) for f in os.listdir(path) if f.endswith('.jpg')]       #os.listdir 列举文件夹目录，子文件夹名及子文件名
 
 def dist_between_feature_vector(feature_vector_a, feature_vector_b):
-	dist = 0
-	for feature_x, feature_y in zip(feature_vector_a, feature_vector_b):
-		dist = dist + (feature_x-feature_y)**2
-	return dist
+    dist = 0
+    for feature_x, feature_y in zip(feature_vector_a, feature_vector_b):
+        dist = dist + (feature_x-feature_y)**2
+    return dist
 
 def dists(example_image_feature_vector, compare_feature_vectors_file_path):
 
@@ -67,12 +65,12 @@ def calculate_and_save_dists(example_image_path):
     use_time = end_time - start_time
     print(str(use_time.seconds+use_time.microseconds/1000000.0))
 
-	# images = []
-	# for name, dist in zip(image_paths, dists):
-	# 	print name, dist
-	# 	images.append(image.Image(name, dist))
+    # images = []
+    # for name, dist in zip(image_paths, dists):
+    # 	print name, dist
+    # 	images.append(image.Image(name, dist))
 
-	# return images
+    # return images
 
 # def get_dists(example_image_path, image_set_folder):
 # 	image_paths = get_imlist(image_set_folder)
