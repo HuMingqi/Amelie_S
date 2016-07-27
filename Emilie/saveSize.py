@@ -1,23 +1,23 @@
-from PIL import Image
+ï»¿from PIL import Image
 import glob
 
-def saveSize(filepath,imageDir):     #imageDir Í¼Æ¬Í¨Åä±í´ïÊ½
-    imgDirLi=glob.glob(imageDir)     #ÁĞ±íË³Ğò²»Ò»¶¨°´windowsÄÇÑù,°´×Ö·û´®×ÖµäĞòÖØÅÅ,imageDirÊÇÒ»¸öÄ£Ê½£¬/*.jgp
+def saveSize(filepath,imageDir):     #imageDir å›¾ç‰‡é€šé…è¡¨è¾¾å¼
+    imgDirLi=glob.glob(imageDir)     #åˆ—è¡¨é¡ºåºä¸ä¸€å®šæŒ‰windowsé‚£æ ·,æŒ‰å­—ç¬¦ä¸²å­—å…¸åºé‡æ’,imageDiræ˜¯ä¸€ä¸ªæ¨¡å¼ï¼Œ/*.jgp
     dic={}        
     for imgpath in imgDirLi:
         #print(imgpath)
         img=Image.open(imgpath)    
-        imgName=imgpath.split('\\')[-1]         #python Ä¬ÈÏµÄÂ·¾¶·Ö¸ô·û \   
+        imgName=imgpath.split('\\')[-1]         #python é»˜è®¤çš„è·¯å¾„åˆ†éš”ç¬¦ \   
         sli=[]
-        sli.append(img.size[0])                 #img.size ·µ»ØµÄ tuple £¬¸ÄÎªlist,json.loadsºó¿ÉÖ±½ÓÏÂ±êÒıÓÃ
+        sli.append(img.size[0])                 #img.size è¿”å›çš„ tuple ï¼Œæ”¹ä¸ºlist,json.loadsåå¯ç›´æ¥ä¸‹æ ‡å¼•ç”¨
         sli.append(img.size[1])
-        dic[imgName]=sli             #×ÖµäÎŞĞòµ«²»Ëæ»ú£¬ÄãÎŞ·¨È·¶¨¼üµÄĞò£¬µ«¼üÔÚÈ·¶¨µÄÎ»ÖÃ
-        #sli.clear()                 #¶ÔÏóÒ²ÇåÁË£¡£¡£¡        
+        dic[imgName]=sli             #å­—å…¸æ— åºä½†ä¸éšæœºï¼Œä½ æ— æ³•ç¡®å®šé”®çš„åºï¼Œä½†é”®åœ¨ç¡®å®šçš„ä½ç½®
+        #sli.clear()                 #å¯¹è±¡ä¹Ÿæ¸…äº†ï¼ï¼ï¼        
         
     sizestr="{"
     for key,value in dic.items():
         sizestr+='"%s":%s,'%(key,value)
-    sizestr=sizestr[:-1]                    #È¥Ä©Î²¶ººÅ£¬·ñÔòjson¼ÓÔØ²»ÁË
+    sizestr=sizestr[:-1]                    #å»æœ«å°¾é€—å·ï¼Œå¦åˆ™jsonåŠ è½½ä¸äº†
     sizestr+="}"
     imgSize=open(filepath,'w')
     imgSize.write(sizestr)

@@ -65,7 +65,7 @@ def search_similar_images(request):
         #image_name = image_path.split('/')[-1]             #分离图片名，图片名格式 i_j.jpg，第i件服饰的第j张图
         clothes_index = image_name.split('_')[0]            #分离图片第一索引 i
 
-        similar_image_url = '%s%s' % (similar_image_url_prefix, image_name) #http://202.119.84.68:8000/Images/image_name     仅给一张示例照片
+        similar_image_url = '%s%s' % (similar_image_url_prefix, image_name) #http://202.119.84.68:8000/Images/{kind}/image_name     仅给一张示例照片
         similar_image_size = image_size_dict[image_name]    #列表
         image_dict['download_url'] = similar_image_url      #图片下载链接，本服务器上
         image_dict['width'] = similar_image_size[0]         #[1:5] 当尺寸是四位时

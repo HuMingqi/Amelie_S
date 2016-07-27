@@ -1,4 +1,4 @@
-class Image(object):
+﻿class Image(object):
 	"""docstring for Image"""
 	def __init__(self, name, dist):
 		super(Image, self).__init__()

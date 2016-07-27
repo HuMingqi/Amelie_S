@@ -27,7 +27,8 @@ def save_data(filename, key_list, value_list):
     target.write(json.dumps(dic))
     target.close()
 
-def calculate_and_save_feature_vectors(filename, image_set_folder):         #calculate feature lib and store filename（路径) use / in folder path
+#use it to generate feature vectors batchly, using "import Emilie.feature_vector" in python internative env
+def calculate_and_save_feature_vectors(filename, image_set_folder):         #calculate feature lib and store filename（path) use / in folder path
     image_paths = get_imlist(image_set_folder)
     image_feature_vectors = []
     #store hsv from cdll

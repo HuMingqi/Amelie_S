@@ -15,7 +15,7 @@ def top_k_dists(dists, k):
     top_ak_dists = heapq.nsmallest(k*a, dists, key=lambda t:t[1])
     top_k_clothes=[]
     for path,dist in top_ak_dists:
-        image_name = path.split('/')[-1]        
+        image_name = path.split('/')[-1]    #so image_path has to use '/'   
         repeat=False         
         for clothes in top_k_clothes:
             if clothes.split('_')[0]==image_name.split('_')[0]:     #if the same clothes , then apart it
