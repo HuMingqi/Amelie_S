@@ -6,29 +6,50 @@ import heapq
 #   image_name = path.split('/')[-1]
 #   return image_name.split('_')[0]
 
-# top-k clothes not image!!
-def top_k_dists(dists, k):
-    #images = []
-    #for path, dist in dists:
-    #    images.append(Image(path, dist))    
+# top-k clothes not top-k image!!
+def top_k_dists(dists, k):        
     a=5
     top_ak_dists = heapq.nsmallest(k*a, dists, key=lambda t:t[1])
     top_k_clothes=[]
+    knn_dic={}                              #there K = ak in KNN , knn_dic to count frequency
+    
     for path,dist in top_ak_dists:
         image_name = path.split('/')[-1]    #so image_path has to use '/'   
-        repeat=False         
-        for clothes in top_k_clothes:
-            if clothes.split('_')[0]==image_name.split('_')[0]:     #if the same clothes , then apart it
-                repeat=True
-        if(not repeat):
-            top_k_clothes.append(image_name)            
-            if len(top_k_clothes)==20:
-                print("hit!!!")
-                break
+        clothes_index=image_name.split('_')[0]
+
+        if clothes_index not in knn_dic.keys():
+            knn_dic[clothes_index]=0
+        #++knn_dic[clothes_index]           #++ != +=1
+        knn_dic[clothes_index]+=1
+
+    knn_list=sorted(knn_dic.items(), key=lambda item:item[1], reverse=True)    
+    print("clothes account in "+str(a*k)+" : "+str(len(knn_list))+"\n")    
+    print("the nearest neighbor's frequency : "+str(knn_list[0][1])+"\n")
+
+    if len(knn_list)>=k:
+        knn_list=knn_list[0:k]
+
+    for item in knn_list:
+        clothes_index=item[0]
+        for path,dist in top_ak_dists:
+            image_name = path.split('/')[-1]
+            if clothes_index==image_name.split('_')[0]:
+                top_k_clothes.append(image_name)
+                break;
+
+        # repeat=False         
+        # for clothes in top_k_clothes:
+        #     if clothes.split('_')[0]==image_name.split('_')[0]:     #if the same clothes , then discard it
+        #         repeat=True
+        # if(not repeat):
+        #     top_k_clothes.append(image_name)
+        #     if len(top_k_clothes)==k:
+        #         print("hit!!!")
+        #         break
     ak=a*k
-    while len(top_k_clothes)!=20:
+    while len(top_k_clothes)!=k:
         image_name=top_ak_dists[--ak][0].split('/')[-1]
-        top_k_clothes.append(image_name)    
+        top_k_clothes.append(image_name)
 
     return top_k_clothes
 
