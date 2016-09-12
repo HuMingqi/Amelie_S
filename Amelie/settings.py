@@ -1,5 +1,5 @@
 """
-Django settings for Emilie project.
+Django settings for Amelie project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -51,9 +51,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'Emilie.urls'
+ROOT_URLCONF = 'Amelie.urls'
 
-WSGI_APPLICATION = 'Emilie.wsgi.application'
+WSGI_APPLICATION = 'Amelie.wsgi.application'
 
 
 # Database
